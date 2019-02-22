@@ -1,11 +1,16 @@
 use std::io;
 
-mod game_objects;
+/**
+ * Rust looks for ./map.rs or map/mod.rs
+ */
+mod map;
 
 /* Immitate a CLI program */
 pub fn looper() -> io::Result<()> {
     /* String ownership in this function scope.  It'll be changed by the STDIN */
     let mut user_input = String::new();
+
+    map::foo();
 
     loop {
         /*

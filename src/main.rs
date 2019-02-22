@@ -1,7 +1,8 @@
 use serde_json::Value;
 use std::{env, io};
 
-use rust_edge::looper;
+mod game;
+
 /*
 `const`s are variable constants.
 `&str` are references to the String wherever it is.
@@ -45,7 +46,7 @@ fn main() -> io::Result<()> {
 
     println!("{}", game_config[difficulty]);
 
-    let _game_loop = looper();
+    let _game_loop = game::looper();
 
     /* Return a tuple for the `io::Result` of this function. */
     Ok(())
