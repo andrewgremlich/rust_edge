@@ -1,12 +1,7 @@
 use serde_json::Value;
 use std::{env, io};
 
-// NOTE on TUI
-// Maybe use TUI_RS?  https://github.com/fdehau/tui-rs
-// Another one... https://github.com/gyscos/Cursive
-// and another one...https://github.com/redox-os/termion
-// They are all pretty even.
-
+use rust_edge::looper;
 /*
 `const`s are variable constants.
 `&str` are references to the String wherever it is.
@@ -51,32 +46,6 @@ fn main() -> io::Result<()> {
     println!("{}", game_config[difficulty]);
 
     let _game_loop = looper();
-
-    /* Return a tuple for the `io::Result` of this function. */
-    Ok(())
-}
-
-/* Immitate a CLI program */
-fn looper() -> io::Result<()> {
-    /* String ownership in this function scope.  It'll be changed by the STDIN */
-    let mut user_input = String::new();
-
-    loop {
-        /*
-        Locks this handle and reads a line of user_input into the specified buffer.
-        See the above note about the `unwrap` function.
-        */
-        io::stdin().read_line(&mut user_input).unwrap();
-        println!("You typed: {}", user_input.trim());
-
-        /* Overwrite previous STDIN */
-        user_input.clear();
-
-        /* If "exit" is typed then stop the program. */
-        if user_input == "exit\n" {
-            break;
-        }
-    }
 
     /* Return a tuple for the `io::Result` of this function. */
     Ok(())
