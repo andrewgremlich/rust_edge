@@ -1,15 +1,28 @@
 /* Bring in io into scope of this file. */
 use std::io;
 
+mod game_config;
 /**
  * Rust looks for ./string_constants.rs or string_constants/mod.rs
  */
 mod game_string_constants;
+mod map;
 
 /* Immitate a CLI program */
 pub fn looper() -> io::Result<()> {
     /* String ownership in this function scope.  It'll be changed by the STDIN */
     let mut user_input = String::new();
+
+    let game_config = game_config::fetch_config();
+
+    map::init_map(
+        game_config.xLength,
+        game_config.yLength,
+        game_config.xGoal,
+        game_config.yGoal,
+        game_config.numDangers,
+        game_config.showMap,
+    );
 
     loop {
         /*

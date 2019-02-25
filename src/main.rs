@@ -1,5 +1,4 @@
 /* Bring into scope these crates/modules */
-use serde_json::Value;
 use std::{env, io};
 
 mod game;
@@ -31,21 +30,6 @@ fn main() -> io::Result<()> {
     /* Set environment variables for the program.*/
     env::set_var(CONFIG, GAME_CONFIG_STRING);
     env::set_var(USER_DIFFICULTY, difficulty);
-
-    /*
-    Fetch an environment variable and deserialize the configuration object.
-
-    `env.var(CONFIG) returns a Result<T, E> type.
-
-    NOTE*** To handle Result types, the `unwrap` function is used.  One could
-    have used another way like `match` or `unwrap_or_else`
-
-    https://doc.rust-lang.org/std/result/enum.Result.html
-    */
-    let retrieved_config = env::var(CONFIG).unwrap();
-    let game_config: Value = serde_json::from_str(&retrieved_config).unwrap();
-
-    println!("{}", game_config[difficulty]);
 
     let _game_loop = game::looper();
 

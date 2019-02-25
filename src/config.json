@@ -8,7 +8,7 @@
         "xGoal": 8,
         "numDangers": 12,
         "lives": 5,
-        "mapEnabled": true
+        "showMap": true
     },
     "medium": {
         "yLength": 12,
@@ -19,7 +19,7 @@
         "xGoal": 10,
         "numDangers": 30,
         "lives": 3,
-        "mapEnabled": true
+        "showMap": true
     },
     "hard": {
         "yLength": 14,
@@ -30,7 +30,7 @@
         "xGoal": 12,
         "numDangers": 60,
         "lives": 1,
-        "mapEnabled": true
+        "showMap": true
     },
     "ludicrous": {
         "yLength": 14,
@@ -41,6 +41,6 @@
         "xGoal": 12,
         "numDangers": 60,
         "lives": 0,
-        "mapEnabled": true
+        "showMap": false
     }
 }
