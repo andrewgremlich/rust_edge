@@ -1,3 +1,7 @@
+/*
+&str constants to be used where ever needed in mod.rs.
+*/
+
 pub const GUIDE: &str = "
 /*********************************************/
       Welcome to Rust Edge!

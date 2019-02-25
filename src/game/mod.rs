@@ -1,20 +1,27 @@
 /* Bring in io into scope of this file. */
 use std::io;
 
+/** See mod note in src/main.rs */
 mod game_config;
-/**
- * Rust looks for ./string_constants.rs or string_constants/mod.rs
- */
 mod game_string_constants;
 mod map;
 
 /* Immitate a CLI program */
 pub fn looper() -> io::Result<()> {
-    /* String ownership in this function scope.  It'll be changed by the STDIN */
+    /*
+    String ownership in this function scope.  It'll be changed by the STDIN.
+    String datatype can be changed whenever.
+    */
     let mut user_input = String::new();
 
+    /* Fetch the game config from game ENV. */
     let game_config = game_config::fetch_config();
 
+    /*
+    The game_config, for some reason can't be easily passed through to the map
+    function probably because of scopes and ownership of the IndivdiualConfig struct.
+    So I'm passing the properties that I need from the game_config struct.
+    */
     map::init_map(
         game_config.xLength,
         game_config.yLength,

@@ -1,11 +1,15 @@
 /* Bring into scope these crates/modules */
 use std::{env, io};
 
+/**
+ * Rust looks for ./game.rs or game/mod.rs
+ */
 mod game;
 
 /*
 `const`s are variable constants.
-`&str` are references to the String wherever it is.
+`&str` are references to the String wherever it is and they are always a fixed
+length and could never change.
 */
 const CONFIG: &str = "GAME_CONFIG";
 const USER_DIFFICULTY: &str = "DIFF";

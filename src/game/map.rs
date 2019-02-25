@@ -1,3 +1,6 @@
+/*
+See notes on metadatum attributes and structs in ./src/game/game_config.rs
+*/
 #[derive(Debug)]
 struct Map {
     x_length: u8,
@@ -10,6 +13,9 @@ struct Map {
 
 // impl Map {}
 
+/*
+A public function to initialize the map from the struct given in this file.
+*/
 pub fn init_map(
     x_length: u8,
     y_length: u8,
