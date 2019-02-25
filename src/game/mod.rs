@@ -1,15 +1,15 @@
+/* Bring in io into scope of this file. */
 use std::io;
 
 /**
- * Rust looks for ./map.rs or map/mod.rs
+ * Rust looks for ./string_constants.rs or string_constants/mod.rs
  */
-mod commands;
+mod game_string_constants;
 
 /* Immitate a CLI program */
 pub fn looper() -> io::Result<()> {
     /* String ownership in this function scope.  It'll be changed by the STDIN */
     let mut user_input = String::new();
-
 
     loop {
         /*
@@ -17,9 +17,21 @@ pub fn looper() -> io::Result<()> {
         See the above note about the `unwrap` function.
         */
         io::stdin().read_line(&mut user_input).unwrap();
-        println!("You typed: {}", user_input.trim());
 
-        commands::foo(user_input.trim());
+        /* Match the user_input to command. */
+        /* .trim() helps user_input be a reference for the match to work. */
+        match user_input.trim() {
+            "m" => println!("you want the map."),
+            "a" => println!("you want to change positions in the tomb."),
+            "s" => println!("mark suspected danger."),
+            "r" => println!("remind of nearby danger"),
+            "p" => println!("show current position"),
+            "g" => println!("{}", game_string_constants::GUIDE),
+            "c" => println!("{}", game_string_constants::COMMANDS),
+            "l" => println!("{}", game_string_constants::MAP_LEGEND),
+            "d" => println!("change difficulty"),
+            _ => println!("Command not available!"),
+        }
 
         /* Overwrite previous STDIN */
         user_input.clear();
