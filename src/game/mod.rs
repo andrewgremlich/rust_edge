@@ -3,14 +3,13 @@ use std::io;
 /**
  * Rust looks for ./map.rs or map/mod.rs
  */
-mod map;
+mod commands;
 
 /* Immitate a CLI program */
 pub fn looper() -> io::Result<()> {
     /* String ownership in this function scope.  It'll be changed by the STDIN */
     let mut user_input = String::new();
 
-    map::foo();
 
     loop {
         /*
@@ -19,6 +18,8 @@ pub fn looper() -> io::Result<()> {
         */
         io::stdin().read_line(&mut user_input).unwrap();
         println!("You typed: {}", user_input.trim());
+
+        commands::foo(user_input.trim());
 
         /* Overwrite previous STDIN */
         user_input.clear();
