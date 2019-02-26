@@ -39,13 +39,15 @@ pub fn looper() -> io::Result<()> {
     function probably because of scopes and ownership of the IndivdiualConfig struct.
     So I'm passing the properties that I need from the game_config struct.
     */
-    let player_one = player::init_player(
+    let player_one = player::Player::new(
         game_config.xPlayerStart,
         game_config.yPlayerStart,
         game_config.lives,
     );
 
-    let map_one = map::init_map(
+    // player_one.hello_world();
+
+    let map_one = map::Map::new(
         game_config.xLength,
         game_config.yLength,
         game_config.xGoal,

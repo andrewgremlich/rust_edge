@@ -14,6 +14,29 @@ pub struct Map {
 
 /* Implementation of Map.  Provide functions and or values only to Map struct. */
 impl Map {
+    pub fn new(
+        x_length: u8,
+        y_length: u8,
+        x_goal: u8,
+        y_goal: u8,
+        num_of_dangers: u8,
+        show_map: bool,
+    ) -> Map {
+        let mut map = Map {
+            x_length: x_length,
+            y_length: y_length,
+            x_goal: x_goal,
+            y_goal: y_goal,
+            number_of_dangers: num_of_dangers,
+            show_map: show_map,
+            map_marks: Vec::new(),
+        };
+
+        Map::generate_map(&mut map);
+
+        map
+    }
+
     /* the parameter is &mut self, because this method doesn't know. */
     fn generate_unexplored(&mut self) {
         for _n in 0..self.y_length {
@@ -31,35 +54,4 @@ impl Map {
         /* the parameter isn't &self or &mut self, because it already is &mut. */
         Map::generate_unexplored(self);
     }
-}
-
-/*
-A public function to initialize the map from the struct given in this file.
-*/
-pub fn init_map(
-    x_length: u8,
-    y_length: u8,
-    x_goal: u8,
-    y_goal: u8,
-    num_of_dangers: u8,
-    show_map: bool,
-) -> Map {
-    /* Init struct */
-    let mut map: Map = Map {
-        x_length: x_length,
-        y_length: y_length,
-        x_goal: x_goal,
-        y_goal: y_goal,
-        number_of_dangers: num_of_dangers,
-        show_map: show_map,
-        map_marks: Vec::new(),
-    };
-
-    /*
-    map needs to be passed to self in the impl method as a mutable reference
-    so that it only modifies the original map.
-    */
-    Map::generate_map(&mut map);
-
-    map
 }
