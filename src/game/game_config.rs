@@ -20,15 +20,15 @@ schemas for objects, or prototype constructors in Javascript.
 These hashes are metadatum attributes.  They do specific changes to
 whatever they are attached to.
 
-This `Gameconfig` struct is used for the deserializing of the
+This `GameDifficultyOptions` struct is used for the deserializing of the
 game configuration object.
 */
 #[derive(Deserialize, Debug)]
-struct Gameconfig {
-    easy: IndivdiualConfig,
-    medium: IndivdiualConfig,
-    hard: IndivdiualConfig,
-    ludicrous: IndivdiualConfig,
+struct GameDifficultyOptions {
+    easy: GameConfig,
+    medium: GameConfig,
+    hard: GameConfig,
+    ludicrous: GameConfig,
 }
 
 /*
@@ -39,7 +39,7 @@ IndividualConfig struct is used per game configuration difficulty.
 */
 #[allow(non_snake_case)]
 #[derive(Deserialize, Debug)]
-pub struct IndivdiualConfig {
+pub struct GameConfig {
     pub yLength: u8,
     pub xLength: u8,
     pub yPlayerStart: u8,
@@ -54,7 +54,7 @@ pub struct IndivdiualConfig {
 /*
 The small arrow shows what datatype is to be returned to the callee.
 */
-pub fn fetch_config() -> IndivdiualConfig {
+pub fn fetch_config() -> GameConfig {
     /*
     Fetch an environment variable and deserialize the configuration object.
 
@@ -67,7 +67,7 @@ pub fn fetch_config() -> IndivdiualConfig {
     */
     let retrieved_config = env::var(CONFIG).unwrap();
     let difficulty = env::var(USER_DIFFICULTY).unwrap();
-    let game_config: Gameconfig = serde_json::from_str(&retrieved_config).unwrap();
+    let game_config: GameDifficultyOptions = serde_json::from_str(&retrieved_config).unwrap();
 
     /*
     Whatever the selected difficulty is, `match` the difficulty to the correlated
@@ -79,7 +79,7 @@ pub fn fetch_config() -> IndivdiualConfig {
     Another way for the `&str` to work is to have the match statment be in a different
     function and pass `difficulty` by reference.
      */
-    let diff_game_config: IndivdiualConfig = match difficulty.trim() {
+    let diff_game_config: GameConfig = match difficulty.trim() {
         "easy" => game_config.easy,
         "medium" => game_config.medium,
         "hard" => game_config.hard,

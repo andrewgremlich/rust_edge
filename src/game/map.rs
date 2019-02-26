@@ -2,7 +2,7 @@
 See notes on metadatum attributes and structs in ./src/game/game_config.rs
 */
 #[derive(Debug)]
-struct Map {
+pub struct Map {
     x_length: u8,
     y_length: u8,
     x_goal: u8,
@@ -43,7 +43,7 @@ pub fn init_map(
     y_goal: u8,
     num_of_dangers: u8,
     show_map: bool,
-) {
+) -> Map {
     /* Init struct */
     let mut map: Map = Map {
         x_length: x_length,
@@ -61,5 +61,5 @@ pub fn init_map(
     */
     Map::generate_map(&mut map);
 
-    println!("{:?}", &map);
+    map
 }
