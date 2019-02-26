@@ -9,9 +9,23 @@ struct Map {
     y_goal: u8,
     number_of_dangers: u8,
     show_map: bool,
+    map_marks: Vec<Vec<char>>,
 }
 
-// impl Map {}
+/* Implementation of Map.  Provide functions and or values only to Map struct. */
+impl Map {
+    fn generate_map(&mut self) {
+        for _n in 0..self.y_length {
+            let mut row = Vec::new();
+
+            for _m in 0..self.x_length {
+                row.push('x');
+            }
+
+            &self.map_marks.push(row);
+        }
+    }
+}
 
 /*
 A public function to initialize the map from the struct given in this file.
@@ -25,14 +39,21 @@ pub fn init_map(
     show_map: bool,
 ) {
     /* Init struct */
-    let map: Map = Map {
+    let mut map: Map = Map {
         x_length: x_length,
         y_length: y_length,
         x_goal: x_goal,
         y_goal: y_goal,
         number_of_dangers: num_of_dangers,
         show_map: show_map,
+        map_marks: Vec::new(),
     };
 
-    println!("{:?}", map);
+    /*
+    map needs to be passed to self in the impl method as a mutable reference
+    so that it only modifies the original map.
+    */
+    Map::generate_map(&mut map);
+
+    println!("{:?}", &map.map_marks);
 }
