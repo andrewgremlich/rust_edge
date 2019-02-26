@@ -14,16 +14,22 @@ struct Map {
 
 /* Implementation of Map.  Provide functions and or values only to Map struct. */
 impl Map {
-    fn generate_map(&mut self) {
+    /* the parameter is &mut self, because this method doesn't know. */
+    fn generate_unexplored(&mut self) {
         for _n in 0..self.y_length {
             let mut row = Vec::new();
 
             for _m in 0..self.x_length {
-                row.push('x');
+                row.push('.');
             }
 
-            &self.map_marks.push(row);
+            self.map_marks.push(row);
         }
+    }
+
+    fn generate_map(&mut self) {
+        /* the parameter isn't &self or &mut self, because it already is &mut. */
+        Map::generate_unexplored(self);
     }
 }
 
@@ -55,5 +61,5 @@ pub fn init_map(
     */
     Map::generate_map(&mut map);
 
-    println!("{:?}", &map.map_marks);
+    println!("{:?}", &map);
 }
