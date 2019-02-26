@@ -1,7 +1,7 @@
 #[derive(Debug)]
 pub struct Player {
-    x_player_position: u8,
-    y_player_position: u8,
+    pub x_player_position: u8,
+    pub y_player_position: u8,
     lives: u8,
 }
 
