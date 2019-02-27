@@ -56,6 +56,10 @@ pub fn looper() -> io::Result<()> {
         game_config.showMap,
     );
 
+    println!("{:?}", game_config);
+    println!("{:?}", _player_one);
+    println!("{:?}", _map_one);
+
     loop {
         /*
         Locks this handle and reads a line of user_input into the specified buffer.

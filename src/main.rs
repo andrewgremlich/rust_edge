@@ -1,5 +1,5 @@
 /* Bring into scope these crates/modules */
-use std::{env, io};
+use std::{env, io, process};
 
 /**
  * Rust looks for ./game.rs or game/mod.rs
@@ -28,6 +28,14 @@ fn main() -> io::Result<()> {
     "A heap-allocated vector that is resizable at runtime.""
     */
     let args: Vec<String> = env::args().collect();
+
+    println!("{:?}", args.len());
+
+    if args.len() < 2 {
+        println!("Not enough arguments!  Must be `cargo run [easy, medium, hard]`");
+        process::exit(1);
+    }
+
     /* Just a reference to the 1 index. */
     let difficulty = &args[1];
 
