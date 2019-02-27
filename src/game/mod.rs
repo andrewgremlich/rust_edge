@@ -1,11 +1,15 @@
-/* Bring in io into scope of this file. */
-use std::io;
-
 /** See mod note in src/main.rs */
 mod game_config;
 mod game_string_constants;
 mod map;
 mod player;
+
+/* Bring into scope of this file. */
+use game_config::GameConfig;
+use game_string_constants::{COMMANDS, GUIDE, MAP_LEGEND};
+use map::Map;
+use player::Player;
+use std::io::{stdin, Result};
 
 fn commands(user_input: &str) {
     /* Match the user_input to command. */
@@ -15,16 +19,16 @@ fn commands(user_input: &str) {
         "s" => println!("mark suspected danger."),
         "r" => println!("remind of nearby danger"),
         "p" => println!("show current position"),
-        "g" => println!("{}", game_string_constants::GUIDE),
-        "c" => println!("{}", game_string_constants::COMMANDS),
-        "l" => println!("{}", game_string_constants::MAP_LEGEND),
+        "g" => println!("{}", GUIDE),
+        "c" => println!("{}", COMMANDS),
+        "l" => println!("{}", MAP_LEGEND),
         "d" => println!("change difficulty"),
         _ => println!("Command not available!"),
     }
 }
 
 /* Immitate a CLI program */
-pub fn looper() -> io::Result<()> {
+pub fn looper() -> Result<()> {
     /*
     String ownership in this function scope.  It'll be changed by the STDIN.
     String datatype can be changed whenever.
@@ -32,31 +36,37 @@ pub fn looper() -> io::Result<()> {
     let mut user_input = String::new();
 
     /* Fetch the game config from game ENV. */
-    let game_config = game_config::fetch_config();
+    #[allow(non_snake_case)]
+    let GameConfig {
+        xPlayerStart,
+        yPlayerStart,
+        lives,
+        xLength,
+        yLength,
+        xGoal,
+        yGoal,
+        numDangers,
+        showMap,
+    } = game_config::fetch_config();
 
     /*
     The game_config, for some reason can't be easily passed through to the map
     function probably because of scopes and ownership of the IndivdiualConfig struct.
     So I'm passing the properties that I need from the game_config struct.
     */
-    let _player_one = player::Player::new(
-        game_config.xPlayerStart,
-        game_config.yPlayerStart,
-        game_config.lives,
+    let _player_one = Player::new(xPlayerStart, yPlayerStart, lives);
+
+    let _map_one = Map::new(
+        xPlayerStart,
+        yPlayerStart,
+        xLength,
+        yLength,
+        xGoal,
+        yGoal,
+        numDangers,
+        showMap,
     );
 
-    let _map_one = map::Map::new(
-        game_config.xPlayerStart,
-        game_config.yPlayerStart,
-        game_config.xLength,
-        game_config.yLength,
-        game_config.xGoal,
-        game_config.yGoal,
-        game_config.numDangers,
-        game_config.showMap,
-    );
-
-    println!("{:?}", game_config);
     println!("{:?}", _player_one);
     println!("{:?}", _map_one);
 
@@ -65,7 +75,7 @@ pub fn looper() -> io::Result<()> {
         Locks this handle and reads a line of user_input into the specified buffer.
         See the above note about the `unwrap` function.
         */
-        io::stdin().read_line(&mut user_input).unwrap();
+        stdin().read_line(&mut user_input).unwrap();
 
         commands(&mut user_input);
 
