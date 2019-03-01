@@ -27,7 +27,7 @@ Available commands.
 
 ***Basic Commands
 [m]    Show Map
-[h]    Hike Mountain (example command 'h 2 2')
+[a]    Move position (example command 's 2 2')
 [s]    Mark suspected danger
 [r]    Remind nearby dangers
 [p]    Show current position
@@ -43,6 +43,7 @@ pub const MAP_LEGEND: &str = "
 /*****   MAP LEGEND   *****/
 
 * '&'     Player Icon
+* 'O'     Get to goal!
 * '.'     Unknown location
 * '*'     Visited location with no danger.
 * 'X'     Visited location with known danger.

@@ -51,8 +51,8 @@ pub fn looper() -> Result<()> {
         showMap,
     );
 
-    println!("{:?}", _player_one);
-    println!("{:?}", map_one);
+    // println!("{:?}", _player_one);
+    // println!("{:?}", map_one);
 
     loop {
         /*
@@ -61,16 +61,22 @@ pub fn looper() -> Result<()> {
         */
         stdin().read_line(&mut user_input).unwrap();
 
-        match user_input.trim() {
-            "m" => Map::print_map(&map_one),
-            "a" => println!("you want to change positions in the tomb."),
-            "s" => println!("mark suspected danger."),
-            "r" => println!("remind of nearby danger"),
-            "p" => println!("show current position"),
-            "g" => println!("{}", GUIDE),
-            "c" => println!("{}", COMMANDS),
-            "l" => println!("{}", MAP_LEGEND),
-            "d" => println!("change difficulty"),
+        let parse_first_char = user_input.trim().chars().next();
+        let first_char: char = match parse_first_char {
+            Some(x) => x,
+            None => 'E',
+        };
+
+        match first_char {
+            'm' => Map::print_map(&map_one),
+            'a' => println!("you want to change positions in the tomb. {}", user_input),
+            's' => println!("mark suspected danger."),
+            'r' => println!("remind of nearby danger"),
+            'p' => println!("show current position"),
+            'g' => println!("{}", GUIDE),
+            'c' => println!("{}", COMMANDS),
+            'l' => println!("{}", MAP_LEGEND),
+            'd' => println!("change difficulty"),
             _ => println!("Command not available!"),
         }
 

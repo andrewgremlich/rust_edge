@@ -77,8 +77,11 @@ impl Map {
     fn generate_explored(&mut self) {
         let y_position = self.y_player_position as usize;
         let x_position = self.x_player_position as usize;
+        let y_goal = self.y_goal as usize;
+        let x_goal = self.x_goal as usize;
 
         self.map_marks[y_position][x_position] = '&';
+        self.map_marks[y_goal][x_goal] = 'O';
 
         for n in &self.visited_map_coor {
             let x_visited_position = n.0 as usize;
