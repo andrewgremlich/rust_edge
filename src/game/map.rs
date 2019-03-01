@@ -1,3 +1,5 @@
+use rand::Rng;
+
 /*
 See notes on metadatum attributes and structs in ./src/game/game_config.rs
 */
@@ -10,6 +12,7 @@ pub struct Map {
     x_goal: u8,
     y_goal: u8,
     number_of_dangers: u8,
+    dangers: Vec<(u8, u8)>,
     show_map: bool,
     map_marks: Vec<Vec<char>>,
     visited_map_coor: Vec<(u8, u8)>,
@@ -35,15 +38,17 @@ impl Map {
             x_goal: x_goal,
             y_goal: y_goal,
             number_of_dangers: num_of_dangers,
+            dangers: Vec::new(),
             show_map: show_map,
             map_marks: Vec::new(),
             visited_map_coor: Vec::new(),
         };
 
-        map.visited_map_coor.push((2, 3));
-        map.visited_map_coor.push((3, 3));
+        // map.visited_map_coor.push((5, 5));
+        // map.visited_map_coor.push((3, 3));
 
         Map::generate_map(&mut map);
+        Map::generate_dangers(&mut map);
 
         map
     }
@@ -78,5 +83,25 @@ impl Map {
         /* the parameter isn't &self or &mut self, because it already is &mut. */
         Map::generate_unexplored(self);
         Map::generate_explored(self);
+    }
+
+    fn generate_dangers(&mut self) {
+        let mut done = false;
+
+        while !done {
+            let x_danger_coor: u8 = rand::thread_rng().gen_range(0, self.x_length);
+            let y_danger_coor: u8 = rand::thread_rng().gen_range(0, self.y_length);
+            let danger_coor = (x_danger_coor, y_danger_coor);
+
+            if self.dangers.contains(&danger_coor) {
+                continue;
+            }
+
+            self.dangers.push(danger_coor);
+
+            if self.dangers.len() as u8 == self.number_of_dangers {
+                done = true;
+            }
+        }
     }
 }
