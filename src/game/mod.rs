@@ -11,22 +11,6 @@ use map::Map;
 use player::Player;
 use std::io::{stdin, Result};
 
-fn commands(user_input: &str) {
-    /* Match the user_input to command. */
-    match user_input.trim() {
-        "m" => println!("you want the map."),
-        "a" => println!("you want to change positions in the tomb."),
-        "s" => println!("mark suspected danger."),
-        "r" => println!("remind of nearby danger"),
-        "p" => println!("show current position"),
-        "g" => println!("{}", GUIDE),
-        "c" => println!("{}", COMMANDS),
-        "l" => println!("{}", MAP_LEGEND),
-        "d" => println!("change difficulty"),
-        _ => println!("Command not available!"),
-    }
-}
-
 /* Immitate a CLI program */
 pub fn looper() -> Result<()> {
     /*
@@ -56,7 +40,7 @@ pub fn looper() -> Result<()> {
     */
     let _player_one = Player::new(xPlayerStart, yPlayerStart, lives);
 
-    let _map_one = Map::new(
+    let map_one = Map::new(
         xPlayerStart,
         yPlayerStart,
         xLength,
@@ -68,7 +52,7 @@ pub fn looper() -> Result<()> {
     );
 
     println!("{:?}", _player_one);
-    println!("{:?}", _map_one);
+    println!("{:?}", map_one);
 
     loop {
         /*
@@ -77,7 +61,18 @@ pub fn looper() -> Result<()> {
         */
         stdin().read_line(&mut user_input).unwrap();
 
-        commands(&mut user_input);
+        match user_input.trim() {
+            "m" => Map::print_map(&map_one),
+            "a" => println!("you want to change positions in the tomb."),
+            "s" => println!("mark suspected danger."),
+            "r" => println!("remind of nearby danger"),
+            "p" => println!("show current position"),
+            "g" => println!("{}", GUIDE),
+            "c" => println!("{}", COMMANDS),
+            "l" => println!("{}", MAP_LEGEND),
+            "d" => println!("change difficulty"),
+            _ => println!("Command not available!"),
+        }
 
         /* Overwrite previous STDIN */
         user_input.clear();

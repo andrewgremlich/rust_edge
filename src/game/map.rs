@@ -1,6 +1,11 @@
 use rand::Rng;
 
 /*
+TODO: make a rust binary program that executes "Hello there" every hour?
+prank?
+*/
+
+/*
 See notes on metadatum attributes and structs in ./src/game/game_config.rs
 */
 #[derive(Debug)]
@@ -51,6 +56,22 @@ impl Map {
         Map::generate_dangers(&mut map);
 
         map
+    }
+
+    fn output_map(&self) {
+        for n in &self.map_marks {
+            for m in n {
+                print!("{} ", m);
+            }
+            print!("\n");
+        }
+    }
+
+    pub fn print_map(&self) {
+        let _can_do_map = match &self.show_map {
+            true => Map::output_map(self),
+            false => println!("You lost the map!"),
+        };
     }
 
     fn generate_explored(&mut self) {
