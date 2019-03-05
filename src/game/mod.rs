@@ -13,12 +13,6 @@ use std::io::{stdin, Result};
 
 /* Immitate a CLI program */
 pub fn looper() -> Result<()> {
-    /*
-    String ownership in this function scope.  It'll be changed by the STDIN.
-    String datatype can be changed whenever.
-    */
-    let mut user_input = String::new();
-
     /* Fetch the game config from game ENV. */
     #[allow(non_snake_case)]
     let GameConfig {
@@ -38,7 +32,7 @@ pub fn looper() -> Result<()> {
     function probably because of scopes and ownership of the IndivdiualConfig struct.
     So I'm passing the properties that I need from the game_config struct.
     */
-    let _player_one = Player::new(xPlayerStart, yPlayerStart, lives);
+    let mut player_one = Player::new(xPlayerStart, yPlayerStart, lives);
 
     let map_one = Map::new(
         xPlayerStart,
@@ -53,6 +47,14 @@ pub fn looper() -> Result<()> {
 
     // println!("{:?}", _player_one);
     // println!("{:?}", map_one);
+    println!("{}", GUIDE);
+    println!("{}", COMMANDS);
+
+    /*
+    String ownership in this function scope.  It'll be changed by the STDIN.
+    String datatype can be changed whenever.
+    */
+    let mut user_input = String::new();
 
     loop {
         /*
@@ -69,7 +71,7 @@ pub fn looper() -> Result<()> {
 
         match first_char {
             'm' => Map::print_map(&map_one),
-            'a' => println!("you want to change positions in the tomb. {}", user_input),
+            'a' => Player::change_map_position(&mut player_one, &mut user_input),
             's' => println!("mark suspected danger."),
             'r' => println!("remind of nearby danger"),
             'p' => println!("show current position"),
@@ -77,6 +79,7 @@ pub fn looper() -> Result<()> {
             'c' => println!("{}", COMMANDS),
             'l' => println!("{}", MAP_LEGEND),
             'd' => println!("change difficulty"),
+            'E' => println!("Error parsing first character of command."),
             _ => println!("Command not available!"),
         }
 

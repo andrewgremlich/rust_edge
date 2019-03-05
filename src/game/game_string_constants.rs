@@ -13,7 +13,7 @@ that is believed to hold Attila the Hun!
 
 To find your way through the tomb, you must
 avoid the dangers along the way.  You will
-receive cues on your map when you are next to
+receive clues on your map when you are next to
 danger, but the exact spot of the danger is
 unknown!
 
