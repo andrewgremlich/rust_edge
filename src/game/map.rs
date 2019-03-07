@@ -49,6 +49,8 @@ impl Map {
             visited_map_coor: Vec::new(),
         };
 
+        map.visited_map_coor.push((x_player_start, y_player_start));
+
         map.generate_dangers();
         map.generate_map();
 

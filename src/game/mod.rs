@@ -1,10 +1,12 @@
 /** See mod note in src/main.rs */
+mod command;
 mod game_config;
 mod game_string_constants;
 mod map;
 mod player;
 
 /* Bring into scope of this file. */
+use command::Command;
 use game_config::GameConfig;
 use game_string_constants::{COMMANDS, GUIDE, MAP_LEGEND};
 use map::Map;
@@ -61,13 +63,9 @@ pub fn looper() -> Result<()> {
         */
         stdin().read_line(&mut user_input).unwrap();
 
-        let parse_first_char = user_input.trim().chars().next();
-        let first_char: char = match parse_first_char {
-            Some(x) => x,
-            None => 'E',
-        };
+        let command = Command::new(&user_input);
 
-        match first_char {
+        match command.move_command {
             'm' => map_one.print_map(),
             'a' => {
                 player_one.change_map_position(&mut user_input);

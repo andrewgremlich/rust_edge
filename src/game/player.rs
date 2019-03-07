@@ -15,16 +15,15 @@ impl Player {
     }
 
     pub fn change_map_position(&mut self, user_input: &String) {
-        let parsed = user_input.split(" ");
-        let commands = parsed.collect::<Vec<&str>>();
+        let commands: Vec<&str> = user_input.split_whitespace().collect();
 
         if commands.len() != 3 {
             println!("Not enough move arguments!");
             return;
         }
 
-        let x_command: u8 = commands[1].trim().parse().unwrap();
-        let y_command: u8 = commands[2].trim().parse().unwrap();
+        let x_command: u8 = commands[1].trim().parse::<u8>().unwrap();
+        let y_command: u8 = commands[2].trim().parse::<u8>().unwrap();
 
         self.x_player_position = x_command;
         self.y_player_position = y_command;
