@@ -75,9 +75,14 @@ impl Map {
 
         let x_command: u8 = command_splits[1].parse::<u8>().unwrap();
         let y_command: u8 = command_splits[2].parse::<u8>().unwrap();
+        let visited_coor: (u8, u8) = (x_command, y_command);
 
         self.x_player_position = x_command;
         self.y_player_position = y_command;
+
+        if !self.visited_map_coor.contains(&visited_coor) {
+            self.visited_map_coor.push(visited_coor);
+        }
 
         Map::generate_map(self);
 
@@ -91,6 +96,14 @@ impl Map {
             }
             print!("\n");
         }
+    }
+
+    fn generate_map(&mut self) {
+        self.map_marks = Vec::new();
+
+        /* the parameter isn't &self or &mut self, because it already is &mut. */
+        Map::generate_unexplored(self);
+        Map::generate_explored(self);
     }
 
     fn generate_explored(&mut self) {
@@ -120,14 +133,6 @@ impl Map {
 
             self.map_marks.push(row);
         }
-    }
-
-    fn generate_map(&mut self) {
-        self.map_marks = Vec::new();
-
-        /* the parameter isn't &self or &mut self, because it already is &mut. */
-        Map::generate_unexplored(self);
-        Map::generate_explored(self);
     }
 
     fn generate_dangers(&mut self) {
