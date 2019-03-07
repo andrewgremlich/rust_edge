@@ -58,6 +58,32 @@ impl Map {
         map
     }
 
+    pub fn print_map(&self) {
+        let _can_do_map = match &self.show_map {
+            true => Map::output_map(self),
+            false => println!("You lost the map!"),
+        };
+    }
+
+    pub fn update_player_position(&mut self, user_input: &String) {
+        let command_splits: Vec<&str> = user_input.split_whitespace().collect();
+
+        if command_splits.len() != 3 {
+            println!("There were right amount of move arguments!");
+            return;
+        }
+
+        let x_command: u8 = command_splits[1].parse::<u8>().unwrap();
+        let y_command: u8 = command_splits[2].parse::<u8>().unwrap();
+
+        self.x_player_position = x_command;
+        self.y_player_position = y_command;
+
+        Map::generate_map(self);
+
+        println!("{:?}", self);
+    }
+
     fn output_map(&self) {
         for n in &self.map_marks {
             for m in n {
@@ -65,13 +91,6 @@ impl Map {
             }
             print!("\n");
         }
-    }
-
-    pub fn print_map(&self) {
-        let _can_do_map = match &self.show_map {
-            true => Map::output_map(self),
-            false => println!("You lost the map!"),
-        };
     }
 
     fn generate_explored(&mut self) {
@@ -104,6 +123,8 @@ impl Map {
     }
 
     fn generate_map(&mut self) {
+        self.map_marks = Vec::new();
+
         /* the parameter isn't &self or &mut self, because it already is &mut. */
         Map::generate_unexplored(self);
         Map::generate_explored(self);

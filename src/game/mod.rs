@@ -34,7 +34,7 @@ pub fn looper() -> Result<()> {
     */
     let mut player_one = Player::new(xPlayerStart, yPlayerStart, lives);
 
-    let map_one = Map::new(
+    let mut map_one = Map::new(
         xPlayerStart,
         yPlayerStart,
         xLength,
@@ -71,7 +71,10 @@ pub fn looper() -> Result<()> {
 
         match first_char {
             'm' => Map::print_map(&map_one),
-            'a' => Player::change_map_position(&mut player_one, &mut user_input),
+            'a' => {
+                Player::change_map_position(&mut player_one, &mut user_input);
+                Map::update_player_position(&mut map_one, &mut user_input);
+            }
             's' => println!("mark suspected danger."),
             'r' => println!("remind of nearby danger"),
             'p' => println!("show current position"),
