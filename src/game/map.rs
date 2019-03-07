@@ -49,18 +49,15 @@ impl Map {
             visited_map_coor: Vec::new(),
         };
 
-        // map.visited_map_coor.push((5, 5));
-        // map.visited_map_coor.push((3, 3));
-
-        Map::generate_map(&mut map);
-        Map::generate_dangers(&mut map);
+        map.generate_dangers();
+        map.generate_map();
 
         map
     }
 
     pub fn print_map(&self) {
         let _can_do_map = match &self.show_map {
-            true => Map::output_map(self),
+            true => self.output_map(),
             false => println!("You lost the map!"),
         };
     }
@@ -84,9 +81,7 @@ impl Map {
             self.visited_map_coor.push(visited_coor);
         }
 
-        Map::generate_map(self);
-
-        println!("{:?}", self);
+        self.generate_map();
     }
 
     fn output_map(&self) {
@@ -102,8 +97,8 @@ impl Map {
         self.map_marks = Vec::new();
 
         /* the parameter isn't &self or &mut self, because it already is &mut. */
-        Map::generate_unexplored(self);
-        Map::generate_explored(self);
+        self.generate_unexplored();
+        self.generate_explored();
     }
 
     fn generate_explored(&mut self) {
@@ -112,14 +107,14 @@ impl Map {
         let y_goal = self.y_goal as usize;
         let x_goal = self.x_goal as usize;
 
-        self.map_marks[y_position][x_position] = '&';
-        self.map_marks[y_goal][x_goal] = 'O';
-
         for n in &self.visited_map_coor {
             let x_visited_position = n.0 as usize;
             let y_visited_position = n.1 as usize;
             self.map_marks[y_visited_position][x_visited_position] = '*';
         }
+
+        self.map_marks[y_position][x_position] = '&';
+        self.map_marks[y_goal][x_goal] = 'O';
     }
 
     /* the parameter is &mut self, because this method doesn't know. */

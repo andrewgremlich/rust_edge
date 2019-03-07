@@ -30,7 +30,7 @@ fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
-        println!("Not enough arguments!  Must be `cargo run [easy, medium, hard]`");
+        println!("Not enough arguments!  Must be `rust_edge [easy, medium, hard]`");
         process::exit(1);
     }
 

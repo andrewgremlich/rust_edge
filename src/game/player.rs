@@ -28,7 +28,5 @@ impl Player {
 
         self.x_player_position = x_command;
         self.y_player_position = y_command;
-
-        println!("{:?}", self);
     }
 }

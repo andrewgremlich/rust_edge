@@ -45,8 +45,6 @@ pub fn looper() -> Result<()> {
         showMap,
     );
 
-    // println!("{:?}", _player_one);
-    // println!("{:?}", map_one);
     println!("{}", GUIDE);
     println!("{}", COMMANDS);
 
@@ -70,10 +68,11 @@ pub fn looper() -> Result<()> {
         };
 
         match first_char {
-            'm' => Map::print_map(&map_one),
+            'm' => map_one.print_map(),
             'a' => {
-                Player::change_map_position(&mut player_one, &mut user_input);
-                Map::update_player_position(&mut map_one, &mut user_input);
+                player_one.change_map_position(&mut user_input);
+                map_one.update_player_position(&mut user_input);
+                map_one.print_map();
             }
             's' => println!("mark suspected danger."),
             'r' => println!("remind of nearby danger"),
