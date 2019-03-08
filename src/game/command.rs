@@ -25,19 +25,4 @@ impl Command {
             y_command: y_command,
         }
     }
-
-    fn parse_first_command(user_input: &String) -> char {
-        let trimmed_user_input = user_input.trim();
-        let parse_first_char = trimmed_user_input.chars().next();
-        let first_char: char = match parse_first_char {
-            Some(x) => x,
-            None => 'E',
-        };
-
-        first_char
-    }
-
-    fn coordinates_within_bounds(user_input: &String) {
-        println!("Hello world!");
-    }
 }

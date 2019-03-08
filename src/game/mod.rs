@@ -63,13 +63,17 @@ pub fn looper() -> Result<()> {
         */
         stdin().read_line(&mut user_input).unwrap();
 
-        let command = Command::new(&user_input);
+        let Command {
+            move_command,
+            x_command,
+            y_command,
+        } = Command::new(&user_input);
 
-        match command.move_command {
+        match move_command {
             'm' => map_one.print_map(),
             'a' => {
-                player_one.change_map_position(&mut user_input);
-                map_one.update_player_position(&mut user_input);
+                map_one.update_player_position((x_command, y_command));
+                player_one.change_map_position((x_command, y_command));
                 map_one.print_map();
             }
             's' => println!("mark suspected danger."),

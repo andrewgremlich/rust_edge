@@ -64,23 +64,12 @@ impl Map {
         };
     }
 
-    pub fn update_player_position(&mut self, user_input: &String) {
-        let command_splits: Vec<&str> = user_input.split_whitespace().collect();
+    pub fn update_player_position(&mut self, command: (u8, u8)) {
+        self.x_player_position = command.0;
+        self.y_player_position = command.1;
 
-        if command_splits.len() != 3 {
-            println!("There were right amount of move arguments!");
-            return;
-        }
-
-        let x_command: u8 = command_splits[1].parse::<u8>().unwrap();
-        let y_command: u8 = command_splits[2].parse::<u8>().unwrap();
-        let visited_coor: (u8, u8) = (x_command, y_command);
-
-        self.x_player_position = x_command;
-        self.y_player_position = y_command;
-
-        if !self.visited_map_coor.contains(&visited_coor) {
-            self.visited_map_coor.push(visited_coor);
+        if !self.visited_map_coor.contains(&command) {
+            self.visited_map_coor.push(command);
         }
 
         self.generate_map();
