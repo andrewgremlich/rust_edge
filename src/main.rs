@@ -11,12 +11,7 @@ mod game;
 `&str` are references to the String wherever it is and they are always a fixed
 length and could never change.
 */
-const CONFIG: &str = "GAME_CONFIG";
 const USER_DIFFICULTY: &str = "DIFF";
-
-/* This was a way to include the file as a string when the program is compiled. */
-/* This is serializing it! */
-const GAME_CONFIG_STRING: &str = include_str!("config.json");
 
 /*
     MAIN FUNCTION -> program starts by `main`
@@ -38,7 +33,6 @@ fn main() -> io::Result<()> {
     let difficulty = &args[1];
 
     /* Set environment variables for the program.*/
-    env::set_var(CONFIG, GAME_CONFIG_STRING);
     env::set_var(USER_DIFFICULTY, difficulty);
 
     let _game_loop = game::looper();

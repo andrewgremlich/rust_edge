@@ -1,13 +1,13 @@
 /** See mod note in src/main.rs */
 mod command;
-mod game_config;
+mod game_configurator;
 mod game_string_constants;
 mod map;
 mod player;
 
 /* Bring into scope of this file. */
 use command::Command;
-use game_config::GameConfig;
+use game_configurator::{get_game_config, GameConfig};
 use game_string_constants::{COMMANDS, GUIDE, MAP_LEGEND};
 use map::Map;
 use player::Player;
@@ -27,7 +27,7 @@ pub fn looper() -> Result<()> {
         yGoal,
         numDangers,
         showMap,
-    } = game_config::fetch_config();
+    } = get_game_config();
 
     /*
     The game_config, for some reason can't be easily passed through to the map
