@@ -72,9 +72,12 @@ pub fn looper() -> Result<()> {
         match move_command {
             'm' => map_one.print_map(),
             'a' => {
-                map_one.update_player_position((x_command, y_command));
-                player_one.change_map_position((x_command, y_command));
-                map_one.print_map();
+                let is_adjacent_move: bool = player_one.is_adjacent_move((x_command, y_command));
+                if is_adjacent_move {
+                    player_one.change_map_position((x_command, y_command));
+                    map_one.update_player_position((x_command, y_command));
+                    map_one.print_map();
+                }
             }
             's' => println!("mark suspected danger."),
             'r' => println!("remind of nearby danger"),
