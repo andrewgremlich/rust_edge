@@ -81,7 +81,7 @@ pub fn looper() -> Result<()> {
             }
             's' => println!("mark suspected danger."),
             'r' => println!("remind of nearby danger"),
-            'p' => println!("show current position"),
+            'p' => player_one.print_current_position(),
             'g' => println!("{}", GUIDE),
             'c' => println!("{}", COMMANDS),
             'l' => println!("{}", MAP_LEGEND),

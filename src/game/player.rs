@@ -14,6 +14,17 @@ impl Player {
         }
     }
 
+    pub fn print_current_position(&mut self) {
+        println!(
+            "\n({},  {})",
+            self.x_player_position, self.y_player_position
+        );
+        println!(
+            "Your X position is {} and your Y position is {}\n",
+            self.x_player_position, self.y_player_position
+        );
+    }
+
     pub fn change_map_position(&mut self, command: (u8, u8)) {
         self.x_player_position = command.0;
         self.y_player_position = command.1;
