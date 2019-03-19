@@ -34,7 +34,7 @@ pub fn looper() -> Result<()> {
     function probably because of scopes and ownership of the IndivdiualConfig struct.
     So I'm passing the properties that I need from the game_config struct.
     */
-    let mut player_one = Player::new(xPlayerStart, yPlayerStart, lives);
+    let mut player_one = Player::new(xPlayerStart, yPlayerStart, lives, 0);
 
     let mut map_one = Map::new(
         xPlayerStart,
@@ -70,7 +70,10 @@ pub fn looper() -> Result<()> {
         } = Command::new(&user_input);
 
         match move_command {
-            'm' => map_one.print_map(),
+            'm' => {
+                map_one.print_map();
+                player_one.is_nearby_danger(&map_one.dangers);
+            }
             'a' => {
                 let is_adjacent_move: bool = player_one.is_adjacent_move((x_command, y_command));
                 if is_adjacent_move {
@@ -78,9 +81,10 @@ pub fn looper() -> Result<()> {
                     map_one.update_player_position((x_command, y_command));
                     map_one.print_map();
                 }
+                player_one.is_nearby_danger(&map_one.dangers);
             }
             's' => println!("mark suspected danger."),
-            'r' => println!("remind of nearby danger"),
+            'r' => player_one.is_nearby_danger(&map_one.dangers),
             'p' => player_one.print_current_position(),
             'g' => println!("{}", GUIDE),
             'c' => println!("{}", COMMANDS),

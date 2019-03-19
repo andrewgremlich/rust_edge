@@ -3,15 +3,32 @@ pub struct Player {
     pub x_player_position: u8,
     pub y_player_position: u8,
     lives: u8,
+    nearby_dangers: u8,
 }
 
 impl Player {
-    pub fn new(x_player_position: u8, y_player_position: u8, lives: u8) -> Player {
+    pub fn new(
+        x_player_position: u8,
+        y_player_position: u8,
+        lives: u8,
+        nearby_dangers: u8,
+    ) -> Player {
         Player {
             x_player_position: x_player_position,
             y_player_position: y_player_position,
             lives: lives,
+            nearby_dangers: nearby_dangers,
         }
+    }
+
+    fn diff_two_coordinates(&self, command: (u8, u8)) -> (u8, u8) {
+        let mut x_move_difference: i8 = self.x_player_position as i8 - command.0 as i8;
+        let mut y_move_difference: i8 = self.y_player_position as i8 - command.1 as i8;
+
+        x_move_difference = x_move_difference.abs();
+        y_move_difference = y_move_difference.abs();
+
+        (x_move_difference as u8, y_move_difference as u8)
     }
 
     pub fn print_current_position(&mut self) {
@@ -31,21 +48,34 @@ impl Player {
     }
 
     pub fn is_adjacent_move(&self, command: (u8, u8)) -> bool {
-        let mut x_move_difference: i8 = self.x_player_position as i8 - command.0 as i8;
-        let mut y_move_difference: i8 = self.y_player_position as i8 - command.1 as i8;
+        let coordinates_difference = self.diff_two_coordinates(command);
 
-        x_move_difference = x_move_difference.abs();
-        y_move_difference = y_move_difference.abs();
-
-        if x_move_difference > 1 || y_move_difference > 1 {
+        if coordinates_difference.0 > 1 || coordinates_difference.1 > 1 {
             println!("Can not move farther than one square!");
             return false;
-        } else if x_move_difference == 1 || y_move_difference == 1 {
+        } else if coordinates_difference.0 == 1 || coordinates_difference.1 == 1 {
             println!("Moving to another position...");
             return true;
         }
 
         println!("Something went wrong with the logic here...");
         return false;
+    }
+
+    pub fn is_nearby_danger(&self, map_dangers: &Vec<(u8, u8)>) {
+        let mut num_nearby_dangers: u8 = 0;
+
+        for danger in map_dangers {
+            let coordinates_difference = self.diff_two_coordinates(*danger);
+
+            if coordinates_difference.0 <= 1 && coordinates_difference.1 <= 1 {
+                num_nearby_dangers = num_nearby_dangers + 1;
+            }
+        }
+
+        println!(
+            "You are nearby {:?} danger! Be careful!",
+            num_nearby_dangers
+        );
     }
 }

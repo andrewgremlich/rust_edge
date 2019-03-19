@@ -1,10 +1,4 @@
 use rand::Rng;
-
-/*
-TODO: make a rust binary program that executes "Hello there" every hour?
-prank?
-*/
-
 /*
 See notes on metadatum attributes and structs in ./src/game/game_config.rs
 */
@@ -17,7 +11,7 @@ pub struct Map {
     x_goal: u8,
     y_goal: u8,
     number_of_dangers: u8,
-    dangers: Vec<(u8, u8)>,
+    pub dangers: Vec<(u8, u8)>,
     show_map: bool,
     map_marks: Vec<Vec<char>>,
     visited_map_coor: Vec<(u8, u8)>,
