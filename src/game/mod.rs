@@ -80,6 +80,10 @@ pub fn looper() -> Result<()> {
                 let is_adjacent_move: bool = player_one.is_adjacent_move((x_command, y_command));
                 if is_adjacent_move {
                     player_one.change_map_position((x_command, y_command));
+                    map_one.update_player_position((
+                        player_one.x_player_position,
+                        player_one.y_player_position,
+                    ));
                     player_one.is_dead(&map_one.dangers);
                     map_one.update_player_position((
                         player_one.x_player_position,

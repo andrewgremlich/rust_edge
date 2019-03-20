@@ -96,6 +96,13 @@ impl Map {
             let x_visited_position = n.0 as usize;
             let y_visited_position = n.1 as usize;
             self.map_marks[y_visited_position][x_visited_position] = '*';
+
+            for m in &self.dangers {
+                println!("({:?}, {:?}): ({:?}, {:?}) ", m.0, m.1, n.0, n.1);
+                if n.0 == m.0 && n.1 == m.1 {
+                    self.map_marks[y_visited_position][x_visited_position] = 'X';
+                }
+            }
         }
 
         self.map_marks[y_position][x_position] = '&';
