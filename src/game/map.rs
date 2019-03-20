@@ -8,8 +8,8 @@ pub struct Map {
     y_player_position: u8,
     x_length: u8,
     y_length: u8,
-    x_goal: u8,
-    y_goal: u8,
+    pub x_goal: u8,
+    pub y_goal: u8,
     number_of_dangers: u8,
     pub dangers: Vec<(u8, u8)>,
     show_map: bool,
@@ -98,7 +98,6 @@ impl Map {
             self.map_marks[y_visited_position][x_visited_position] = '*';
 
             for m in &self.dangers {
-                println!("({:?}, {:?}): ({:?}, {:?}) ", m.0, m.1, n.0, n.1);
                 if n.0 == m.0 && n.1 == m.1 {
                     self.map_marks[y_visited_position][x_visited_position] = 'X';
                 }

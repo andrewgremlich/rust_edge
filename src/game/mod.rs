@@ -69,8 +69,6 @@ pub fn looper() -> Result<()> {
             y_command,
         } = Command::new(&user_input);
 
-        println!("{:?}", map_one.dangers);
-
         match move_command {
             'm' => {
                 map_one.print_map();
@@ -108,6 +106,11 @@ pub fn looper() -> Result<()> {
 
         /* Overwrite previous STDIN */
         user_input.clear();
+
+        if player_one.player_won_game(&(map_one.x_goal, map_one.y_goal)) {
+            println!("You win!");
+            break;
+        }
 
         if player_one.lives < 0 {
             println!("You lose!");

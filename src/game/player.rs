@@ -31,6 +31,18 @@ impl Player {
         (x_move_difference as u8, y_move_difference as u8)
     }
 
+    pub fn player_won_game(&self, map_goal: &(u8, u8)) -> bool {
+        let coordinates_difference = self.diff_two_coordinates(map_goal);
+
+        println!("{:?}", coordinates_difference);
+
+        if coordinates_difference == (0, 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     pub fn print_current_position(&mut self) {
         println!(
             "\n({},  {})",
