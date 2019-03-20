@@ -22,7 +22,7 @@ pub struct GameConfig {
     pub yGoal: u8,
     pub xGoal: u8,
     pub numDangers: u8,
-    pub lives: u8,
+    pub lives: i8,
     pub showMap: bool,
 }
 
@@ -36,7 +36,7 @@ impl GameConfig {
         yGoal: u8,
         xGoal: u8,
         numDangers: u8,
-        lives: u8,
+        lives: i8,
         showMap: bool,
     ) -> GameConfig {
         GameConfig {

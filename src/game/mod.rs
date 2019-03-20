@@ -69,6 +69,8 @@ pub fn looper() -> Result<()> {
             y_command,
         } = Command::new(&user_input);
 
+        println!("{:?}", map_one.dangers);
+
         match move_command {
             'm' => {
                 map_one.print_map();
@@ -78,10 +80,16 @@ pub fn looper() -> Result<()> {
                 let is_adjacent_move: bool = player_one.is_adjacent_move((x_command, y_command));
                 if is_adjacent_move {
                     player_one.change_map_position((x_command, y_command));
-                    map_one.update_player_position((x_command, y_command));
+                    player_one.is_dead(&map_one.dangers);
+                    map_one.update_player_position((
+                        player_one.x_player_position,
+                        player_one.y_player_position,
+                    ));
                     map_one.print_map();
                 }
                 player_one.is_nearby_danger(&map_one.dangers);
+
+                println!("{:?}", player_one);
             }
             's' => println!("mark suspected danger."),
             'r' => player_one.is_nearby_danger(&map_one.dangers),
@@ -96,6 +104,11 @@ pub fn looper() -> Result<()> {
 
         /* Overwrite previous STDIN */
         user_input.clear();
+
+        if player_one.lives < 0 {
+            println!("You lose!");
+            break;
+        }
 
         /* If "exit" is typed then stop the program. */
         if user_input == "exit\n" {

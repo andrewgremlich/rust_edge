@@ -2,7 +2,7 @@
 pub struct Player {
     pub x_player_position: u8,
     pub y_player_position: u8,
-    lives: u8,
+    pub lives: i8,
     nearby_dangers: u8,
 }
 
@@ -10,7 +10,7 @@ impl Player {
     pub fn new(
         x_player_position: u8,
         y_player_position: u8,
-        lives: u8,
+        lives: i8,
         nearby_dangers: u8,
     ) -> Player {
         Player {
@@ -21,7 +21,7 @@ impl Player {
         }
     }
 
-    fn diff_two_coordinates(&self, command: (u8, u8)) -> (u8, u8) {
+    fn diff_two_coordinates(&self, command: &(u8, u8)) -> (u8, u8) {
         let mut x_move_difference: i8 = self.x_player_position as i8 - command.0 as i8;
         let mut y_move_difference: i8 = self.y_player_position as i8 - command.1 as i8;
 
@@ -47,8 +47,24 @@ impl Player {
         self.y_player_position = command.1;
     }
 
+    pub fn is_dead(&mut self, map_dangers: &Vec<(u8, u8)>) -> bool {
+        for danger in map_dangers {
+            let coordinates_difference = self.diff_two_coordinates(danger);
+
+            if coordinates_difference.0 == 0 && coordinates_difference.1 == 0 {
+                println!("You dead bro!");
+                self.lives = self.lives - 1;
+                self.x_player_position = 0;
+                self.y_player_position = 0;
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     pub fn is_adjacent_move(&self, command: (u8, u8)) -> bool {
-        let coordinates_difference = self.diff_two_coordinates(command);
+        let coordinates_difference = self.diff_two_coordinates(&command);
 
         if coordinates_difference.0 > 1 || coordinates_difference.1 > 1 {
             println!("Can not move farther than one square!");
@@ -66,16 +82,13 @@ impl Player {
         let mut num_nearby_dangers: u8 = 0;
 
         for danger in map_dangers {
-            let coordinates_difference = self.diff_two_coordinates(*danger);
+            let coordinates_difference = self.diff_two_coordinates(danger);
 
             if coordinates_difference.0 <= 1 && coordinates_difference.1 <= 1 {
                 num_nearby_dangers = num_nearby_dangers + 1;
             }
         }
 
-        println!(
-            "You are nearby {:?} danger! Be careful!",
-            num_nearby_dangers
-        );
+        println!("Danger(s) nearby {:?}.", num_nearby_dangers);
     }
 }

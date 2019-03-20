@@ -123,7 +123,9 @@ impl Map {
             let y_danger_coor: u8 = rand::thread_rng().gen_range(0, self.y_length);
             let danger_coor = (x_danger_coor, y_danger_coor);
 
-            if self.dangers.contains(&danger_coor) {
+            if self.dangers.contains(&danger_coor)
+                || danger_coor == (self.x_player_position, self.y_player_position)
+            {
                 continue;
             }
 
