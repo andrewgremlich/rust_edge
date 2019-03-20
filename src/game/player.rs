@@ -3,6 +3,8 @@ pub struct Player {
     pub x_player_position: u8,
     pub y_player_position: u8,
     pub lives: i8,
+    x_previous_position: u8,
+    y_previous_position: u8,
     nearby_dangers: u8,
 }
 
@@ -16,6 +18,8 @@ impl Player {
         Player {
             x_player_position: x_player_position,
             y_player_position: y_player_position,
+            x_previous_position: 0,
+            y_previous_position: 0,
             lives: lives,
             nearby_dangers: nearby_dangers,
         }
@@ -33,8 +37,6 @@ impl Player {
 
     pub fn player_won_game(&self, map_goal: &(u8, u8)) -> bool {
         let coordinates_difference = self.diff_two_coordinates(map_goal);
-
-        println!("{:?}", coordinates_difference);
 
         if coordinates_difference == (0, 0) {
             return true;
@@ -55,6 +57,9 @@ impl Player {
     }
 
     pub fn change_map_position(&mut self, command: (u8, u8)) {
+        self.x_previous_position = self.x_player_position;
+        self.y_previous_position = self.y_player_position;
+
         self.x_player_position = command.0;
         self.y_player_position = command.1;
     }
@@ -66,8 +71,8 @@ impl Player {
             if coordinates_difference.0 == 0 && coordinates_difference.1 == 0 {
                 println!("You dead bro!");
                 self.lives = self.lives - 1;
-                self.x_player_position = 0;
-                self.y_player_position = 0;
+                self.x_player_position = self.x_previous_position;
+                self.y_player_position = self.y_previous_position;
                 return false;
             }
         }

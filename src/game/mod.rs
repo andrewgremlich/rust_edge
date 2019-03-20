@@ -90,8 +90,6 @@ pub fn looper() -> Result<()> {
                     map_one.print_map();
                 }
                 player_one.is_nearby_danger(&map_one.dangers);
-
-                println!("{:?}", player_one);
             }
             's' => println!("mark suspected danger."),
             'r' => player_one.is_nearby_danger(&map_one.dangers),
