@@ -15,6 +15,7 @@ pub struct Map {
     show_map: bool,
     map_marks: Vec<Vec<char>>,
     visited_map_coor: Vec<(u8, u8)>,
+    suspected_danger: Vec<(u8, u8)>,
 }
 
 /* Implementation of Map.  Provide functions and or values only to Map struct. */
@@ -41,6 +42,7 @@ impl Map {
             show_map: show_map,
             map_marks: Vec::new(),
             visited_map_coor: Vec::new(),
+            suspected_danger: Vec::new(),
         };
 
         map.visited_map_coor.push((x_player_start, y_player_start));
@@ -69,6 +71,11 @@ impl Map {
         self.generate_map();
     }
 
+    pub fn mark_suspected_danger(&mut self, suspect_coor: (u8, u8)) {
+        self.suspected_danger.push(suspect_coor);
+        self.generate_map();
+    }
+
     fn output_map(&self) {
         for n in &self.map_marks {
             for m in n {
@@ -83,10 +90,10 @@ impl Map {
 
         /* the parameter isn't &self or &mut self, because it already is &mut. */
         self.generate_unexplored();
-        self.generate_explored();
+        self.generate_map_marks();
     }
 
-    fn generate_explored(&mut self) {
+    fn generate_map_marks(&mut self) {
         let y_position = self.y_player_position as usize;
         let x_position = self.x_player_position as usize;
         let y_goal = self.y_goal as usize;
@@ -102,6 +109,13 @@ impl Map {
                     self.map_marks[y_visited_position][x_visited_position] = 'X';
                 }
             }
+        }
+
+        for n in &self.suspected_danger {
+            let x_suspect_coor = n.0 as usize;
+            let y_suspect_coor = n.1 as usize;
+
+            self.map_marks[y_suspect_coor][x_suspect_coor] = '?';
         }
 
         self.map_marks[y_position][x_position] = '&';

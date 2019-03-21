@@ -25,16 +25,6 @@ impl Player {
         }
     }
 
-    fn diff_two_coordinates(&self, command: &(u8, u8)) -> (u8, u8) {
-        let mut x_move_difference: i8 = self.x_player_position as i8 - command.0 as i8;
-        let mut y_move_difference: i8 = self.y_player_position as i8 - command.1 as i8;
-
-        x_move_difference = x_move_difference.abs();
-        y_move_difference = y_move_difference.abs();
-
-        (x_move_difference as u8, y_move_difference as u8)
-    }
-
     pub fn player_won_game(&self, map_goal: &(u8, u8)) -> bool {
         let coordinates_difference = self.diff_two_coordinates(map_goal);
 
@@ -107,5 +97,15 @@ impl Player {
         }
 
         println!("Danger(s) nearby {:?}.", num_nearby_dangers);
+    }
+
+    fn diff_two_coordinates(&self, command: &(u8, u8)) -> (u8, u8) {
+        let mut x_move_difference: i8 = self.x_player_position as i8 - command.0 as i8;
+        let mut y_move_difference: i8 = self.y_player_position as i8 - command.1 as i8;
+
+        x_move_difference = x_move_difference.abs();
+        y_move_difference = y_move_difference.abs();
+
+        (x_move_difference as u8, y_move_difference as u8)
     }
 }
