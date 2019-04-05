@@ -1,7 +1,3 @@
-use std::env;
-
-const USER_DIFFICULTY: &str = "DIFF";
-
 /*
 There are structs in this file.  The structs are essentially
 schemas for objects, or prototype constructors in Javascript.
@@ -28,39 +24,63 @@ pub struct GameConfig {
 
 #[allow(non_snake_case)]
 impl GameConfig {
-    fn new(
-        yLength: u8,
-        xLength: u8,
-        yPlayerStart: u8,
-        xPlayerStart: u8,
-        yGoal: u8,
-        xGoal: u8,
-        numDangers: u8,
-        lives: i8,
-        showMap: bool,
-    ) -> GameConfig {
-        GameConfig {
-            yLength,
-            xLength,
-            yPlayerStart,
-            xPlayerStart,
-            yGoal,
-            xGoal,
-            numDangers,
-            lives,
-            showMap,
+    pub fn new(diff: &str) -> GameConfig {
+        match diff {
+            "easy" => GameConfig {
+                yLength: 10,
+                xLength: 10,
+                yPlayerStart: 0,
+                xPlayerStart: 0,
+                yGoal: 8,
+                xGoal: 8,
+                numDangers: 12,
+                lives: 5,
+                showMap: true,
+            },
+            "medium" => GameConfig {
+                yLength: 12,
+                xLength: 12,
+                yPlayerStart: 1,
+                xPlayerStart: 1,
+                yGoal: 10,
+                xGoal: 10,
+                numDangers: 30,
+                lives: 3,
+                showMap: true,
+            },
+            "hard" => GameConfig {
+                yLength: 14,
+                xLength: 14,
+                yPlayerStart: 2,
+                xPlayerStart: 2,
+                yGoal: 12,
+                xGoal: 12,
+                numDangers: 60,
+                lives: 1,
+                showMap: true,
+            },
+            "ludicrous" => GameConfig {
+                yLength: 14,
+                xLength: 14,
+                yPlayerStart: 2,
+                xPlayerStart: 2,
+                yGoal: 12,
+                xGoal: 12,
+                numDangers: 60,
+                lives: 0,
+                showMap: false,
+            },
+            _ => GameConfig {
+                yLength: 0,
+                xLength: 0,
+                yPlayerStart: 0,
+                xPlayerStart: 0,
+                yGoal: 0,
+                xGoal: 0,
+                numDangers: 0,
+                lives: 0,
+                showMap: true,
+            },
         }
-    }
-}
-
-pub fn get_game_config() -> GameConfig {
-    let selected_difficulty: &str = &env::var(USER_DIFFICULTY).unwrap();
-
-    match selected_difficulty {
-        "easy" => GameConfig::new(10, 10, 0, 0, 8, 8, 12, 5, true),
-        "medium" => GameConfig::new(12, 12, 1, 1, 10, 10, 30, 3, true),
-        "hard" => GameConfig::new(14, 14, 2, 2, 12, 12, 60, 1, true),
-        "ludicrous" => GameConfig::new(14, 14, 2, 2, 12, 12, 60, 0, false),
-        _ => GameConfig::new(0, 0, 0, 0, 0, 0, 0, 0, false),
     }
 }

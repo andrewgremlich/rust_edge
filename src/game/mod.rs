@@ -7,14 +7,14 @@ mod player;
 
 /* Bring into scope of this file. */
 use command::Command;
-use game_configurator::{get_game_config, GameConfig};
+use game_configurator::GameConfig;
 use game_string_constants::{COMMANDS, GUIDE, MAP_LEGEND};
 use map::Map;
 use player::Player;
-use std::io::{stdin, Result};
+use std::io::stdin;
 
 /* Immitate a CLI program */
-pub fn looper() -> Result<()> {
+pub fn looper(diff: &str) {
     /* Fetch the game config from game ENV. */
     #[allow(non_snake_case)]
     let GameConfig {
@@ -27,7 +27,9 @@ pub fn looper() -> Result<()> {
         yGoal,
         numDangers,
         showMap,
-    } = get_game_config();
+    } = GameConfig::new(diff);
+
+    // let config: GameConfig =
 
     /*
     The game_config, for some reason can't be easily passed through to the map
@@ -122,7 +124,4 @@ pub fn looper() -> Result<()> {
             break;
         }
     }
-
-    /* Return a tuple for the `io::Result` of this function. */
-    Ok(())
 }
