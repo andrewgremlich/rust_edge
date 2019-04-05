@@ -8,8 +8,8 @@ pub const GUIDE: &str = "
 /*********************************************/
 
 You are a daring explorer with a rust edge
-sword.  You already decided to explore a tomb
-that is believed to hold Attila the Hun!
+sword.  You are exploring a tomb that is 
+believed to hold Attila the Hun!
 
 To find your way through the tomb, you must
 avoid the dangers along the way.  You will
@@ -26,17 +26,17 @@ pub const COMMANDS: &str = "
 Available commands.
 
 ***Basic Commands
-[m]    Show Map
-[a]    Move position (example command 's 2 2')
-[s]    Mark suspected danger
-[r]    Remind nearby dangers
-[p]    Show current position
+[m]            Show Map
+[a] {x} {y}    Move position (example command 'a 2 2')
+[s] {x} {y}    Suspected danger (example command 's 2 2')
+[r]            Remind nearby dangers
+[p]            Show current position
 
 ***Help Commands
 [g]    Show guide
 [c]    Show commands again
 [l]    Show Legend
-[d]    Change difficulty
+
 ";
 
 pub const MAP_LEGEND: &str = "

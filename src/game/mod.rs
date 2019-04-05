@@ -100,7 +100,6 @@ pub fn looper() -> Result<()> {
             'g' => println!("{}", GUIDE),
             'c' => println!("{}", COMMANDS),
             'l' => println!("{}", MAP_LEGEND),
-            'd' => println!("change difficulty"),
             'E' => println!("Error parsing first character of command."),
             _ => println!("Command not available!"),
         }
@@ -109,7 +108,7 @@ pub fn looper() -> Result<()> {
         user_input.clear();
 
         if player_one.player_won_game(&(map_one.x_goal, map_one.y_goal)) {
-            println!("You win!");
+            println!("You indeed found Attila the Hun! You win!");
             break;
         }
 
