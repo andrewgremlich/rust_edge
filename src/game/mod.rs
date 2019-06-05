@@ -59,11 +59,12 @@ pub fn looper(diff: &str) {
     let mut user_input = String::new();
 
     loop {
-        /*
-        Locks this handle and reads a line of user_input into the specified buffer.
-        See the above note about the `unwrap` function.
-        */
-        stdin().read_line(&mut user_input).unwrap();
+        match stdin().read_line(&mut user_input) {
+            Ok(_n) => {
+                println!("Command Given {}", user_input);
+            }
+            Err(error) => println!("error: {}", error),
+        }
 
         let Command {
             move_command,
