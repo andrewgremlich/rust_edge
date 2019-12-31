@@ -13,40 +13,38 @@ use map::Map;
 use player::Player;
 use std::io::stdin;
 
-/* Immitate a CLI program */
+/* Imitate a CLI program */
 pub fn looper(diff: &str) {
     /* Fetch the game config from game ENV. */
-    #[allow(non_snake_case)]
+    
     let GameConfig {
-        xPlayerStart,
-        yPlayerStart,
+        x_player_start,
+        y_player_start,
         lives,
-        xLength,
-        yLength,
-        xGoal,
-        yGoal,
-        numDangers,
-        showMap,
+        x_length,
+        y_length,
+        x_goal,
+        y_goal,
+        num_dangers,
+        show_map,
     } = GameConfig::new(diff);
 
-    // let config: GameConfig =
-
     /*
-    The game_config, for some reason can't be easily passed through to the map
+    The GameConfig, for some reason can't be easily passed through to the map
     function probably because of scopes and ownership of the IndivdiualConfig struct.
-    So I'm passing the properties that I need from the game_config struct.
+    So I'm passing the properties that I need from the GameConfig struct.
     */
-    let mut player_one = Player::new(xPlayerStart, yPlayerStart, lives, 0);
+    let mut player_one = Player::new(x_player_start, y_player_start, lives, 0);
 
     let mut map_one = Map::new(
-        xPlayerStart,
-        yPlayerStart,
-        xLength,
-        yLength,
-        xGoal,
-        yGoal,
-        numDangers,
-        showMap,
+        x_player_start,
+        y_player_start,
+        x_length,
+        y_length,
+        x_goal,
+        y_goal,
+        num_dangers,
+        show_map,
     );
 
     println!("{}", GUIDE);

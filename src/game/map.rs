@@ -1,6 +1,6 @@
 use rand::Rng;
 /*
-See notes on metadatum attributes and structs in ./src/game/game_config.rs
+See notes on metadatum attributes and structs in ./src/game/GameConfig.rs
 */
 #[derive(Debug)]
 pub struct Map {
@@ -145,6 +145,7 @@ impl Map {
 
             if self.dangers.contains(&danger_coor)
                 || danger_coor == (self.x_player_position, self.y_player_position)
+                || danger_coor == (self.x_goal, self.y_goal)
             {
                 continue;
             }
